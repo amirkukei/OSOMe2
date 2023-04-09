@@ -22,11 +22,12 @@ public class MovieCell extends ListCell<Movie> {
     private final Label directors = new Label();
     private final Label writers = new Label();
     private final Label mainCast = new Label();
+    private final Label people = new Label();
 
   //  private final Label rating = new Label();
 
     private final VBox layout = new VBox(id, title,  imgUrl, allNumbers,
-            detail, directors, writers, mainCast, genre); //rating, releaseYear, lengthInMinutes,
+            detail, directors, writers, mainCast, genre, people); //rating, releaseYear, lengthInMinutes,
     @Override
     protected void updateItem(Movie movie, boolean empty) {
         super.updateItem(movie, empty);
@@ -43,7 +44,7 @@ public class MovieCell extends ListCell<Movie> {
                     .map(Enum::toString)
                     .collect(Collectors.joining(", "));
             genre.setText(genres);
-            allNumbers.setText("release year: "+ String.valueOf(movie.getReleaseYear())+"     Duration: "
+            allNumbers.setText("release year: "+ String.valueOf(movie.getYearReleased())+"     Duration: "
                     +String.valueOf(movie.getLengthInMinutes())+"     Rating: "+String.valueOf(movie.getRating()));
             //     releaseYear.setText("release year: "+ String.valueOf(movie.getReleaseYear()));
             detail.setText(
@@ -51,8 +52,8 @@ public class MovieCell extends ListCell<Movie> {
                             ? movie.getDescription()
                             : "No description available"
             );
-      //      imgUrl.setText(movie.getImgUrl());
-     //       lengthInMinutes.setText("Duration: "+String.valueOf(movie.getLengthInMinutes()));
+            //      imgUrl.setText(movie.getImgUrl());
+            //       lengthInMinutes.setText("Duration: "+String.valueOf(movie.getLengthInMinutes()));
             String director = movie.getDirectors()
                     .stream()
                     .collect(Collectors.joining(", "));
@@ -65,21 +66,21 @@ public class MovieCell extends ListCell<Movie> {
                     .stream()
                     .collect(Collectors.joining(", "));
             mainCast.setText("Cast: "+cast);
-      //      rating.setText("Rating: "+String.valueOf(movie.getRating()));
+            //      rating.setText("Rating: "+String.valueOf(movie.getRating()));
 
 
             // color scheme
             id.getStyleClass().add("text-white");
             title.getStyleClass().add("text-yellow");
             allNumbers.getStyleClass().add("text-white");
-        //releaseYear.getStyleClass().add("text-white");
-        //    lengthInMinutes.getStyleClass().add("text-white");
+            //releaseYear.getStyleClass().add("text-white");
+            //    lengthInMinutes.getStyleClass().add("text-white");
             directors.getStyleClass().add("text-white");
             detail.getStyleClass().add("text-white");
-        //    rating.getStyleClass().add("text-white");
+            //    rating.getStyleClass().add("text-white");
             writers.getStyleClass().add("text-white");
             mainCast.getStyleClass().add("text-white");
-        //    imgUrl.getStyleClass().add("text-black");
+            //    imgUrl.getStyleClass().add("text-black");
             genre.getStyleClass().add("text-white");
             genre.setStyle("-fx-font-style: italic");
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));

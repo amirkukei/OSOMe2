@@ -20,31 +20,39 @@ import java.net.URL;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+
 
 public class HomeController implements Initializable {
     @FXML
     public JFXButton searchBtn;
+    public JFXButton resetBtn;
+
     @FXML
     public TextField searchField;
+    public TextField idField;
+
     @FXML
     public JFXListView movieListView;
+
     @FXML
     public JFXComboBox genreComboBox;
+
     @FXML
-    public JFXComboBox releaseYearComboBox=new JFXComboBox<>();
+    public JFXComboBox releaseYearComboBox;
+
     @FXML
-    public JFXComboBox ratingComboBox=new JFXComboBox<>();
- //   private static final String BASE = "http://prog2.fh-campuswien.ac.at/movies";
+    public JFXComboBox ratingComboBox;
 
     @FXML
     public JFXButton sortBtn;
+
     public List<Movie> allMovies;
-    private static final String BASE = "http://prog2.fh-campuswien.ac.at/movies";
 
     protected ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
-    protected SortedState sortedState;
 
-//START UI
+    protected SortedState sortedState;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -57,15 +65,15 @@ public class HomeController implements Initializable {
 
     //prepare lists  for UI
     public void initializeState() throws IOException {
-     //   allMovies = Movie.initializeMovies();
-        allMovies = MovieAPI.getDataBaseFromInternet(BASE);
-      //  printMovies(allMovies);
+        //   allMovies = Movie.initializeMovies();
+        allMovies = MovieAPI.getMovies();
+        //  printMovies(allMovies);
 
 
         //       String schaumamal=MovieAPI.getDataBaseFromInternet(BASE);
- //       System.out.println(schaumamal);
-  //             String urlmitquery=MovieAPI.getDataBaseFromInternet(BASE);
-  //             System.out.println(urlmitquery);
+        //       System.out.println(schaumamal);
+        //             String urlmitquery=MovieAPI.getDataBaseFromInternet(BASE);
+        //             System.out.println(urlmitquery);
         observableMovies.clear();
         observableMovies.addAll(allMovies); // add all movies to the observable list
         sortedState = SortedState.NONE;
@@ -94,10 +102,10 @@ public class HomeController implements Initializable {
 
         ArrayList<Double> ratingList = new ArrayList<Double>();
         for(int i = 9; i>=0; i--) {
-        Double rate=0.0+i;
-        System.out.println(rate);
-        ratingList.add(rate);
-    }
+            Double rate=0.0+i;
+            System.out.println(rate);
+            ratingList.add(rate);
+        }
         System.out.println(ratingList.toString());
         ratingComboBox.getItems().add("No filter");  // add "no filter" to the combobox
      /*   ArrayList<String> ratingStringList= new ArrayList<>();
@@ -106,7 +114,7 @@ public class HomeController implements Initializable {
         }*/
         ratingComboBox.getItems().addAll(ratingList);    // add all genres to the combobox
         ratingComboBox.setPromptText("Filter by Rating");
-}
+    }
 
     //SEARCH BUTTON
     public void searchBtnClicked(ActionEvent actionEvent) {
@@ -141,7 +149,7 @@ public class HomeController implements Initializable {
     //TESTPRINTER
     void printMovies(List<Movie> allMovies){
         for (Movie m:allMovies){
-            System.out.println(m.getReleaseYear());
+            System.out.println(m.getYearReleased());
             System.out.println(m.getId());
             System.out.println(m.getImgUrl());
             System.out.println(m.getLengthInMinutes());
@@ -155,11 +163,11 @@ public class HomeController implements Initializable {
     //Java Streams
     public List<Integer>  getAllExistingReleaseYears(List<Movie> movies) {
         List<Integer> allYears = movies.stream()
-                .map(movie -> movie.getReleaseYear())
+                .map(movie -> movie.getYearReleased())
                 .sorted(Comparator.reverseOrder())
                 .distinct()
                 .collect(Collectors.toList());
-    //    System.out.println(allYears);
+        //    System.out.println(allYears);
         return allYears;
     }
     void methodToTryStreams(){
@@ -200,8 +208,8 @@ public class HomeController implements Initializable {
     }
     public List<Movie> getMoviesBetweenYears(List<Movie> movies, int yearStart, int yearEnd) {
         var result = movies.stream()
-                .filter(movie -> movie.getReleaseYear()> yearStart)
-                .filter(movie -> movie.getReleaseYear()< yearEnd)
+                .filter(movie -> movie.getYearReleased()> yearStart)
+                .filter(movie -> movie.getYearReleased()< yearEnd)
                 .collect(Collectors.toList());
         System.out.println("the following movies were made between " +yearStart+" and "+yearEnd);
         printMovies(result);
@@ -226,8 +234,8 @@ public class HomeController implements Initializable {
         return movies.stream()
                 .filter(Objects::nonNull)
                 .filter(movie ->
-                    movie.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                    movie.getDescription().toLowerCase().contains(query.toLowerCase())
+                        movie.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                                movie.getDescription().toLowerCase().contains(query.toLowerCase())
                 )
                 .toList();
     }
@@ -261,4 +269,6 @@ public class HomeController implements Initializable {
         observableMovies.clear();
         observableMovies.addAll(filteredMovies);
     }
+
+
 }
