@@ -130,12 +130,6 @@ public class HomeController implements Initializable {
             observableMovies.clear();
             observableMovies.addAll(movies);
 
-            // DUMMY calling extra Functions
-            /*System.out.println(getLongestMovieTitle(movies));
-            System.out.println(getMostPopularActor(movies));
-            System.out.println(countMoviesFrom(movies, "Quentin Tarantino"));
-            System.out.println(getMoviesBetweenYears(movies, 2008, 2019));
-            System.out.println(getBusiestWriter(movies));*/
         }
     }
 
