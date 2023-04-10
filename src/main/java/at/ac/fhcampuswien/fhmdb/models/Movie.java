@@ -9,7 +9,7 @@ public class Movie {
     private final String description;
     private final List<Genre> genres;
 
-    private final int yearReleased;
+    private final int releaseYear ;
     private final double rating;
     private final String id;
     private final String imgUrl;
@@ -26,7 +26,7 @@ public class Movie {
         this.title = title;
         this.description = description;
         this.genres = genres;
-        this.yearReleased = yearReleased;
+        this.releaseYear  = yearReleased;
         this.rating = rating;
         this.id = id;
         this.imgUrl = imgUrl;
@@ -80,8 +80,8 @@ public class Movie {
     public List<Genre> getGenres() {
         return genres;
     }
-    public int getYearReleased(){
-        return yearReleased;
+    public int getReleaseYear (){
+        return releaseYear ;
     }
     public double getRating(){
         return rating;
